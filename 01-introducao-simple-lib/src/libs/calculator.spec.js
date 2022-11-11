@@ -11,7 +11,7 @@
  *     - caso o teste não passe, ele está correto e não é um falso-positivo
  */
 
-const { sum } = require('./calculator');
+import { sum } from './calculator';
 
 it('should sum 2 and 2 and the result must be 4', () => {
   expect(sum(2, 2)).toBe(4);

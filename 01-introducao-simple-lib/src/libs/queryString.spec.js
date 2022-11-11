@@ -11,7 +11,7 @@
  *     - yarn test --coverage => é gerado um relatório sobre a cobertura (porcentagem de linhas, branches (blocos de if, for, etc), funções, arquivos, que têm casos de testes correspondentes)
  */
 
-const { queryString, parse } = require('./queryString');
+import { queryString, parse } from './queryString';
 
 describe('Object to query string', () => {
   it('should create a valid query string when an object is provided', () => {
