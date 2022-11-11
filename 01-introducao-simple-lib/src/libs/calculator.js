@@ -7,4 +7,4 @@ module.exports.sum = (a, b) => {
   }
 
   return +number1 + +number2;
-}
+};

@@ -6,6 +6,9 @@
  *   -> Diferença entre .toBe() e .toEqual()
  *     - .toBe() checa se o valor recebido é exatamente igual ao esperado
  *     - .toEqual() checa se é semelhante, por exemplo, um objeto com os mesmos valores porém em ordem diferente
+ *   -> Cobertura de testes (coverage)
+ *     - tamanho da cobertura no projeto como um todo
+ *     - yarn test --coverage => é gerado um relatório sobre a cobertura (porcentagem de linhas, branches (blocos de if, for, etc), funções, arquivos, que têm casos de testes correspondentes)
  */
 
 const { queryString, parse } = require('./queryString');
