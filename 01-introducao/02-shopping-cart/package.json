@@ -1,0 +1,20 @@
+{
+  "name": "01-introducao-simple-lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2",
+    "@types/jest": "^29.2.2",
+    "babel-jest": "^29.3.1",
+    "jest": "^29.3.0"
+  }
+}
