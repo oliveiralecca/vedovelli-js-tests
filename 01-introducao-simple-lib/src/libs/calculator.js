@@ -6,5 +6,5 @@ module.exports.sum = (a, b) => {
     throw new Error('Please check your input');
   }
 
-  return +number1 + +number2;
+  return number1 + number2;
 };
