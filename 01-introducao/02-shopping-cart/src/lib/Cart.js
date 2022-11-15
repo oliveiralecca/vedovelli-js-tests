@@ -10,8 +10,12 @@ export class Cart {
     if (find(this.items, itemToFind)) {
       remove(this.items, itemToFind);
     }
-    
+
     this.items.push(item);
+  }
+
+  remove(product) {
+    remove(this.items, { product });
   }
 
   getTotal() {

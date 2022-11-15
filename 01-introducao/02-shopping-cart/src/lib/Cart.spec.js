@@ -10,9 +10,13 @@ import { Cart } from './Cart';
 
 describe('Cart', () => {
   let cart;
-  let product = {
+  let productA = {
     title: 'Adidas running shoes - men',
     price: 35388, // 353.88 | R$ 353,88
+  };
+  let productB = {
+    title: 'Adidas running shoes - women',
+    price: 41872, // 418.72 | R$ 418,72
   };
 
   beforeEach(() => {
@@ -25,7 +29,7 @@ describe('Cart', () => {
 
   it('should multiply quantity and price and receive the total amount', () => {
     const item = {
-      product,
+      product: productA,
       quantity: 2, // 70776
     };
 
@@ -36,15 +40,31 @@ describe('Cart', () => {
 
   it('should ensure no more than on product exists at a time', () => {
     cart.add({
-      product,
+      product: productA,
       quantity: 2,
     });
 
     cart.add({
-      product,
+      product: productA,
       quantity: 1,
     });
 
     expect(cart.getTotal()).toEqual(35388);
+  });
+
+  it('should update total when a product gets included and then removed', () => {
+    cart.add({
+      product: productA,
+      quantity: 2,
+    });
+
+    cart.add({
+      product: productB,
+      quantity: 1,
+    });
+
+    cart.remove(productA);
+
+    expect(cart.getTotal()).toEqual(41872);
   });
 });
