@@ -115,7 +115,7 @@ describe('Cart', () => {
     });
   });
 
-  describe('spacial conditions', () => {
+  describe('special conditions', () => {
     it('should apply percentage discount quantity above minimum is passed', () => {
       const condition = {
         percentage: 30,
