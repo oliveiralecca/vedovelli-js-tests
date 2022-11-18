@@ -103,6 +103,20 @@ describe('Cart', () => {
       expect(cart.getTotal().getAmount()).toBeGreaterThan(0);
     });
 
+    it('should include formatted amount in the summary', () => {
+      cart.add({
+        product: productA,
+        quantity: 5,
+      });
+
+      cart.add({
+        product: productB,
+        quantity: 3,
+      });
+
+      expect(cart.summary().formatted).toEqual('R$3,025.56');
+    });
+
     it('should reset the cart when checkout() is called', () => {
       cart.add({
         product: productB,
@@ -205,6 +219,25 @@ describe('Cart', () => {
       });
 
       expect(cart.getTotal().getAmount()).toEqual(106164);
+    });
+
+    it('should receive two or more conditions and determine/apply the best discount. Second case.', () => {
+      const condition1 = {
+        percentage: 80, // desconto de 80% => agora é a melhor condição
+        minimum: 2,
+      };
+
+      const condition2 = {
+        quantity: 2, // 40% de desconto (ímpar), 50% de desconto (par) 
+      };
+
+      cart.add({
+        product: productA,
+        condition: [condition1, condition2],
+        quantity: 5,
+      });
+
+      expect(cart.getTotal().getAmount()).toEqual(35388);
     });
   });
 });

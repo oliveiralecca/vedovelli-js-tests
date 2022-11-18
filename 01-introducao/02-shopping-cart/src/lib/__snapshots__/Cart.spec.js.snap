@@ -24,6 +24,7 @@ exports[`Cart checkout() should return an object with the total and the list of 
 
 exports[`Cart checkout() should return an object with the total and the list of items when summary() is called 1`] = `
 {
+  "formatted": "R$3,025.56",
   "items": [
     {
       "product": {
@@ -40,6 +41,10 @@ exports[`Cart checkout() should return an object with the total and the list of 
       "quantity": 3,
     },
   ],
-  "total": 302556,
+  "total": {
+    "amount": 302556,
+    "currency": "BRL",
+    "precision": 2,
+  },
 }
 `;
