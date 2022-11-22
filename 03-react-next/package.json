@@ -6,11 +6,11 @@
     "dev": "next dev",
     "test": "jest",
     "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "@tailwindcss/ui": "0.7.2",
     "@testing-library/user-event": "^14.4.3",
     "D": "^1.0.0",
