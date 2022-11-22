@@ -3,7 +3,7 @@
  *     - argumento 'i' => case-insensitive
  */
 
-import { screen, render } from '@testing-library/react';
+import { screen, render, fireEvent } from '@testing-library/react';
 import ProductCard from './product-card';
 
 const product = {
@@ -12,20 +12,41 @@ const product = {
   image: 'https://source.unsplash.com/random',
 };
 
+const addToCart = jest.fn();
+
+const renderProductCard = () => {
+  render(<ProductCard product={product} addToCart={addToCart} />);
+};
+
 describe('ProductCard', () => {
   it('should render ProductCard', () => {
-    render(<ProductCard product={product} />);
+    renderProductCard();
 
     expect(screen.getByTestId('product-card')).toBeInTheDocument();
   });
 
   it('should display proper content', () => {
-    render(<ProductCard product={product} />);
+    renderProductCard();
 
-    expect(screen.getByText(new RegExp(product.title, 'i'))).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(product.price, 'i'))).toBeInTheDocument();
+    expect(
+      screen.getByText(new RegExp(product.title, 'i')),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(new RegExp(product.price, 'i')),
+    ).toBeInTheDocument();
     expect(screen.getByTestId('image')).toHaveStyle({
       backgroundImage: product.image,
     });
+  });
+
+  it('should call props.addToCart() when button gets clicked', async () => {
+    renderProductCard();
+
+    const button = screen.getByRole('button');
+
+    await fireEvent.click(button);
+
+    expect(addToCart).toHaveBeenCalledTimes(1);
+    expect(addToCart).toHaveBeenCalledWith(product);
   });
 });
