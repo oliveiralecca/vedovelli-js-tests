@@ -1,7 +1,8 @@
 /*
- *   -> new RegExp() ajuda a deixar a busca por texto com o screen.getByText() um pouco mais abrangente
- *     - argumento 'i' => case-insensitive
- */
+*   -> new RegExp() ajuda a deixar a busca por texto com o screen.getByText() um pouco mais abrangente
+*     - argumento 'i' => case-insensitive
+*   -> marco como async as implementações que precisam de um click, por exemplo => async () => {}
+*/
 
 import { screen, render, fireEvent } from '@testing-library/react';
 import ProductCard from './product-card';
