@@ -1,6 +1,6 @@
 /*
- *   -> new RegExp() ajuda a deixar a busca por texto com o screen.getByText() um pouco mais abrangente
- *     - argumento 'i' => case-insensitive
+ *   -> it.todo('description') => testes a fazer, servem como um lembrete dos próximos testes a serem implementados
+ *   -> screen.getByTestId('') => retorna um nó, uma tag HTML, porém, quando estou interessada no conteúdo dessa tag, posso usar um .textContent por exemplo
  */
 
 import { screen, render, fireEvent } from '@testing-library/react';
@@ -12,10 +12,8 @@ const product = {
   image: 'https://source.unsplash.com/random',
 };
 
-const addToCart = jest.fn();
-
 const renderCartItem = () => {
-  render(<CartItem product={product} addToCart={addToCart} />);
+  render(<CartItem product={product} />);
 };
 
 describe('CartItem', () => {
@@ -39,4 +37,24 @@ describe('CartItem', () => {
     expect(image).toHaveProperty('src', product.image);
     expect(image).toHaveProperty('alt', product.title);
   });
+
+  it('should display 1 as initial quantity', () => {
+    renderCartItem();
+
+    expect(screen.getByTestId('quantity').textContent).toBe('1');
+  });
+
+  it('should increase quantity by 1 when second button is clicked', async () => {
+    renderCartItem();
+
+    const [_, button] = screen.getAllByRole('button');
+
+    await fireEvent.click(button);
+
+    expect(screen.getByTestId('quantity').textContent).toBe('2');
+  });
+
+  it.todo('should decrease quantity by 1 when first button is clicked');
+
+  it.todo('should not go below zero in the quantity');
 });
