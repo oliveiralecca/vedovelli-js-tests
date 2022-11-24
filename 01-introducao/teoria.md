@@ -23,6 +23,8 @@ Pirâmide de testes: os tipos mais comuns...
 - têm que evitar o máximo de dependências externas
 ### Integration Tests (Testes de Integração)
 - garantem que diversas unidades trabalham bem em conjunto dentro de uma composição
+- envolvem componentes mais complexos que normalmente se comunicam com fontes externas de dados
+- renderizam outros componentes e são responsáveis por passar métodos e dados aos componentes filhos 
 ### End to End (E2E) Tests
 - testes a nível do que o usuário encontra na nossa aplicação
 - normalmente rodam no browser
