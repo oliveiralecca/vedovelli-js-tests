@@ -4,7 +4,7 @@
  *     - screen => faz referência a qualquer coisa retornada pelo componente
  *     - screen.debug() => ver o que está sendo retornado do componente diretamente no terminal, e um elemento pode ser passado como argumento para ser "pesquisado" no retorno
  *     - fireEvent => dispara eventos, retornando uma Promise (tem que usar async/await)
- *     - userEvent => provê eventos mais próximos do que o usuário faz em tela
+ *     - userEvent => provê eventos mais próximos do que o usuário faz em tela, como digitar num input
  *   -> Ferramentas do próprio Jest
  *     - .toHaveBeenCalledTimes(1) => determina quantas vezes quero que um método seja executado
  *     - jest.fn() => provê uma mock function para fins de testes
