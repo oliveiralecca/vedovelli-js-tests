@@ -8,6 +8,11 @@ export default function Search({ doSearch }) {
     doSearch(term);
   };
 
+  const inputHandler = (event) => {
+    if (event.target.value === '') doSearch('');
+    setTerm(event.target.value);
+  };
+
   return (
     <form
       onSubmit={submitHandler}
@@ -28,7 +33,7 @@ export default function Search({ doSearch }) {
 
       <input
         value={term}
-        onChange={(event) => setTerm(event.target.value)}
+        onInput={inputHandler}
         className="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline"
         type="search"
         placeholder="Search"
