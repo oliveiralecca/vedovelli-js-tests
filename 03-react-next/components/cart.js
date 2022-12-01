@@ -2,7 +2,7 @@ import CartItem from './cart-item';
 import { useCartStore } from '../store/cart';
 
 export default function Cart() {
-  const open = useCartStore((store) => store.state.open);
+  const { open, products } = useCartStore((store) => store.state);
   const toggle = useCartStore((store) => store.actions.toggle);
 
   return (
@@ -28,7 +28,9 @@ export default function Cart() {
         </button>
       </div>
       <hr className="my-3" />
-      <CartItem />
+      {products.map((product) => (
+        <CartItem key={product.id} product={product} />
+      ))}
       <a className="flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
         <span>Checkout</span>
         <svg
