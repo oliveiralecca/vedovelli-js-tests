@@ -1,14 +1,18 @@
 /*
- * -> O método .spyOn() do Jest nos permite "espionar" um método que é importado e ocorre direto no componente, e não é passado por prop (como o método toggle() lá no cart que vem direto da Store e não por prop). Dessa forma, nos testes não temos como passar uma mock function para o componente e testar, aí entra o .spyOn()
+ *  -> O método .spyOn() do Jest nos permite "espionar" um método que é importado e ocorre direto no componente, e não é passado por prop (como o método toggle() lá no cart que vem direto da Store e não por prop). Dessa forma, nos testes não temos como passar uma mock function para o componente e testar, aí entra o .spyOn()
+ *  -> o act() do TestRenderer (componentsAct) é necessário quando há interação com a DOM do componente renderizado no teste, como o clique num botão. Nesse caso, um warning avisará no terminal a necessidade de usá-lo
  */
 
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act as hooksAct } from '@testing-library/react-hooks';
 import { screen, render } from '@testing-library/react';
 import { useCartStore } from '../store/cart';
 import { makeServer } from '../miragejs/server';
 import { setAutoFreeze } from 'immer';
 import userEvent from '@testing-library/user-event';
 import Cart from './cart';
+import TestRenderer from 'react-test-renderer';
+
+const { act: componentsAct } = TestRenderer;
 
 setAutoFreeze(false);
 
@@ -40,31 +44,33 @@ describe('Cart', () => {
     expect(screen.getByTestId('cart')).toHaveClass('hidden');
   });
 
-  it('should remove CSS class "hidden" in the component', () => {
-    act(() => toggle());
+  it('should remove CSS class "hidden" in the component', async () => {
+    await componentsAct(async () => {
+      render(<Cart />);
 
-    render(<Cart />);
+      await userEvent.click(screen.getByTestId('close-button'));
 
-    expect(screen.getByTestId('cart')).not.toHaveClass('hidden');
+      expect(screen.getByTestId('cart')).not.toHaveClass('hidden');
+    });
   });
 
-  it('should call store toggle() twice', () => {
-    render(<Cart />);
+  it('should call store toggle() twice', async () => {
+    await componentsAct(async () => {
+      render(<Cart />);
 
-    const button = screen.getByTestId('close-button');
+      const button = screen.getByTestId('close-button');
 
-    act(() => {
-      userEvent.click(button);
-      userEvent.click(button);
+      await userEvent.click(button);
+      await userEvent.click(button);
+
+      expect(spy).toHaveBeenCalledTimes(2);
     });
-
-    expect(spy).toHaveBeenCalledTimes(2);
   });
 
   it('should display 2 products cards', () => {
     const products = server.createList('product', 2);
 
-    act(() => {
+    hooksAct(() => {
       for (const product of products) {
         add(product);
       }
