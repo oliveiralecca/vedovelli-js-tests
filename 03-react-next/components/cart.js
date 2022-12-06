@@ -3,7 +3,9 @@ import { useCartStore } from '../store/cart';
 
 export default function Cart() {
   const { open, products } = useCartStore((store) => store.state);
-  const toggle = useCartStore((store) => store.actions.toggle);
+  const { toggle, removeAll } = useCartStore((store) => store.actions);
+
+  const hasProducts = products.length > 0;
 
   return (
     <div
@@ -14,6 +16,7 @@ export default function Cart() {
     >
       <div className="flex items-center justify-between">
         <h3 className="text-2xl font-medium text-gray-700">Your cart</h3>
+        <button onClick={removeAll}>Clear cart</button>
         <button
           data-testid="close-button"
           onClick={toggle}
@@ -33,23 +36,30 @@ export default function Cart() {
         </button>
       </div>
       <hr className="my-3" />
+      {!hasProducts ? (
+        <h3 className="text-center font-bold text-blue-600">
+          The are no items in the cart
+        </h3>
+      ) : null}
       {products.map((product) => (
         <CartItem key={product.id} product={product} />
       ))}
-      <a className="flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-        <span>Checkout</span>
-        <svg
-          className="h-5 w-5 mx-2"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-      </a>
+      {hasProducts ? (
+        <a className="flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+          <span>Checkout</span>
+          <svg
+            className="h-5 w-5 mx-2"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      ) : null}
     </div>
   );
 }
