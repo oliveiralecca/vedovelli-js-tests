@@ -10,12 +10,16 @@ describe('Cart Store', () => {
   let server;
   let result;
   let add;
+  let remove;
+  let removeAll;
   let toggle;
 
   beforeEach(() => {
     server = makeServer({ environment: 'test' });
     result = renderHook(() => useCartStore()).result;
     add = result.current.actions.add;
+    remove = result.current.actions.remove;
+    removeAll = result.current.actions.removeAll;
     toggle = result.current.actions.toggle;
   });
 
@@ -61,6 +65,40 @@ describe('Cart Store', () => {
 
     act(() => toggle());
     expect(result.current.state.open).toBe(false);
+
+    expect(result.current.state.products).toHaveLength(0);
+  });
+
+  it('should remove a product from the store', () => {
+    const [productA, productB] = server.createList('product', 2);
+
+    act(() => {
+      add(productA);
+      add(productB);
+    });
+
+    expect(result.current.state.products).toHaveLength(2);
+
+    act(() => {
+      remove(productA);
+    });
+
+    expect(result.current.state.products).toHaveLength(1);
+    expect(result.current.state.products[0]).toEqual(productB);
+  });
+
+  it('should clear cart', () => {
+    const products = server.createList('product', 2);
+
+    act(() => {
+      for (const product of products) {
+        add(product);
+      }
+    });
+
+    expect(result.current.state.products).toHaveLength(2);
+
+    act(() => removeAll());
 
     expect(result.current.state.products).toHaveLength(0);
   });
