@@ -88,6 +88,23 @@ describe('Cart Store', () => {
     expect(result.current.state.products[0]).toEqual(productB);
   });
 
+  it('should not change products in the cart if provided product is not in the array', () => {
+    const [productA, productB, productC] = server.createList('product', 3);
+
+    act(() => {
+      add(productA);
+      add(productB);
+    });
+
+    expect(result.current.state.products).toHaveLength(2);
+
+    act(() => {
+      remove(productC);
+    });
+
+    expect(result.current.state.products).toHaveLength(2);
+  });
+
   it('should clear cart', () => {
     const products = server.createList('product', 2);
 
