@@ -22,6 +22,7 @@ export default function CartItem({ product }) {
           <button onClick={() => remove(product)}>remove</button>
           <div className="flex items-center mt-2">
             <button
+              data-testid="decrease"
               onClick={decrease}
               className="text-gray-500 focus:outline-none focus:text-gray-600"
             >
@@ -41,6 +42,7 @@ export default function CartItem({ product }) {
               {quantity}
             </span>
             <button
+              data-testid="increase"
               onClick={increase}
               className="text-gray-500 focus:outline-none focus:text-gray-600"
             >
