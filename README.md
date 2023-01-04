@@ -47,7 +47,7 @@
 
 ## :dart: About ##
 
-Repository to save learnings about JS tests with Jest and more tools.
+Repository to save learnings about JS tests with Jest and more tools. Covers unit and integration testing.
 
 <!-- ## :sparkles: Features ##
 
